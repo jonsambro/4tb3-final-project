@@ -1,4 +1,4 @@
-grammar Parralelize;
+grammar Parallelize;
 
 @header {
 package cas.cs4tb3.parser;
