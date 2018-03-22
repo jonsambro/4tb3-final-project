@@ -1,0 +1,8 @@
+int n;
+double x[n];
+double y[n];
+
+for (int i = 1; i < n; i++){
+    x[i] = x[i-1] * x[i-2];
+    a = a + b;
+}
