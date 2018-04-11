@@ -1,7 +1,0 @@
-int n;
-double x[n];
-double y[n];
-
-for (int i = 1; i < n; i++){
-    y[i] = x[i]*x[i] - 2*x[i] + 1
-}
