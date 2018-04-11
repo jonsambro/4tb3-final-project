@@ -1,21 +1,32 @@
 grammar Parallelize;
 
 //Start rule
-program: .*? (for_loop .*? {print("Found a for loop!")})*? EOF;
+program: ('#'|.)*? (for_loop .*?)* EOF;
 
 for_loop: FOR '('for_loop_header')' '{' (statement';')* '}';
 
-for_loop_header: .*? ';' .*? ';' statement;
+for_loop_header: assignment ';' .*? ';' statement;
 
 statement
-    : TYPE? IDENT
-    | TYPE? IDENT '=' (literal |IDENT) (OP (literal | IDENT))*
-    | IDENT op_assign (literal | IDENT)
-    | IDENT INC_DEC;
+    : declaration
+    | assignment
+    | self_assignment;
+
+declaration: TYPE variable;
+
+assignment: (declaration | lhs=variable) ASSIGNMENT rhs;
+
+self_assignment
+    : variable OP ASSIGNMENT rhs
+    | variable INC_DEC;
+
+rhs: (literal |variable) (OP (literal | variable))*;
 
 literal: STRING_LITERAL | FLOAT_LITERAL | DOUBLE_LITERAL | INTEGER;
 
-op_assign: ASSIGNMENT OP;
+variable
+    : (IDENT'['rhs']')
+    | simple=IDENT;
 
 FOR : 'for';
 TYPE: 'int' | 'double' | 'string' | 'float' | 'char';
